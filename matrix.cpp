@@ -36,6 +36,7 @@ Matrix::~Matrix()
 void Matrix::print(int prec, bool tp)
 {
 	int dop = 0, k;
+	cout << setprecision(prec);
 	if (tp) {
 		cout << fixed << right;
 		dop = 5;
@@ -44,14 +45,15 @@ void Matrix::print(int prec, bool tp)
 		dop = 8;
 	}
 	for (int i = 0; i < TERMINAL_COL; ++i) cout << "-";
-	for (k = 0; k < m; ++k) if (TERMINAL_COL-(m-k) >= (m-k)*(prec+dop)) break;
+	for (k = 0; k < m; ++k) 
+		if (TERMINAL_COL-(m-k) >= (m-k)*(prec+dop)) break;
 	int width = TERMINAL_COL / (m-k);
 	for (int i = 0; i < n; ++i)
 	{
 		for (int j = 0; j < m; ++j)
 		{
 			if (m-j == k) cout << endl;
-			cout << setw(width) << a[i][j];
+			cout << setw(width-1) << a[i][j];
 		}
 		cout << endl;
 		if (k > 0) cout << endl;
