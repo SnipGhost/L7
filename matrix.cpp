@@ -3,7 +3,7 @@
 //---------------------------------------------------------------------------
 Matrix::Matrix(int str, int kol, bool key): n(str), m(kol)
 {
-	long x = 1;
+	long x = 1, c = 0;
 	a = new TYPE *[n];
 	for (int i = 0; i < n; ++i) 
 	{
@@ -12,7 +12,8 @@ Matrix::Matrix(int str, int kol, bool key): n(str), m(kol)
 		for (int j = 0; j < m; ++j) 
 		{
 			fact *= (j+1);
-			if (key) cin >> a[i][j];
+			c++;
+			if (key) a[i][j] = c;
 			else 
 			{
 				if (i == j) a[i][j] = 1;
@@ -35,29 +36,37 @@ Matrix::~Matrix()
 //---------------------------------------------------------------------------
 void Matrix::print(int prec, bool tp)
 {
-	int dop = 0, k;
+	int dop = 0, k, l;
 	cout << setprecision(prec);
 	if (tp) {
 		cout << fixed << right;
 		dop = 5;
 	} else {
 		cout << scientific << right;
-		dop = 8;
+		dop = 9;
 	}
 	for (int i = 0; i < TERMINAL_COL; ++i) cout << "-";
 	for (k = 0; k < m; ++k) 
-		if (TERMINAL_COL-(m-k) >= (m-k)*(prec+dop)) break;
-	int width = TERMINAL_COL / (m-k);
-	for (int i = 0; i < n; ++i)
+		if (TERMINAL_COL > (m-k)*(prec+dop)) break;
+	int width = (TERMINAL_COL-1) / (m-k);
+	k = m-k;
+	l = 0;
+	while (l < m)
 	{
-		for (int j = 0; j < m; ++j)
+		int s = (l+k >= m) ? m : l+k;
+		for (int j = l; j < s; ++j) cout << setw(width) << j;
+		cout << endl;
+		for (int i = 0; i < n; ++i)
 		{
-			if (m-j == k) cout << endl;
-			cout << setw(width-1) << a[i][j];
+			for (int j = l; j < s; ++j)
+			{
+				cout << setw(width) << a[i][j];
+			}
+			cout << endl;
 		}
 		cout << endl;
-		if (k > 0) cout << endl;
+		for (int i = 0; i < TERMINAL_COL; ++i) cout << "-";
+		l += k; 
 	}
-	for (int i = 0; i < TERMINAL_COL; ++i) cout << "-";
 }
 //---------------------------------------------------------------------------
