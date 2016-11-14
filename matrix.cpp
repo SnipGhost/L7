@@ -3,12 +3,12 @@
 //---------------------------------------------------------------------------
 Matrix::Matrix(int str, int kol, bool key): n(str), m(kol)
 {
-	long x = 1, c = 0;
+	int x = 1, c = 0;
 	a = new TYPE *[n];
 	for (int i = 0; i < n; ++i) 
 	{
 		a[i] = new TYPE [m];
-		long fact = 1;
+		int fact = 1;
 		for (int j = 0; j < m; ++j) 
 		{
 			fact *= (j+1);
